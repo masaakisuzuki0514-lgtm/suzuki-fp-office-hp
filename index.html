@@ -1004,179 +1004,59 @@ footer {
     相続・ライフプラン・お金の知識など、役立つ情報を定期的に発信しています。
   </p>
 
-  <!-- ブログ記事一覧 -->
   <div id="blog-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:48px;"></div>
-  <p id="blog-empty" style="font-size:14px;color:var(--gray-text);text-align:center;padding:40px 0;">まだ記事がありません。管理画面から投稿してください。</p>
+  <p id="blog-empty" style="font-size:14px;color:var(--gray-text);text-align:center;padding:40px 0;display:none;">まだ記事がありません。</p>
 
-  <!-- 管理画面ボタン -->
   <div style="text-align:center;">
-    <button onclick="document.getElementById('admin-panel').style.display='block';this.style.display='none';"
-      style="font-size:13px;color:var(--gray-text);background:transparent;border:1px solid var(--gray-mid);padding:10px 24px;cursor:pointer;letter-spacing:.06em;font-family:var(--sans);">
-      管理画面を開く
-    </button>
-  </div>
-
-  <!-- 管理画面（パスワード保護） -->
-  <div id="admin-panel" style="display:none;margin-top:40px;background:white;border:1px solid var(--gray-mid);padding:32px;max-width:640px;margin-left:auto;margin-right:auto;">
-    <!-- パスワード画面 -->
-    <div id="pw-screen">
-      <p style="font-family:var(--serif);font-size:18px;color:var(--navy);margin-bottom:20px;">管理者ログイン</p>
-      <input type="password" id="pw-input" placeholder="パスワードを入力"
-        style="width:100%;padding:12px 16px;border:1px solid var(--gray-mid);font-size:14px;margin-bottom:12px;font-family:var(--sans);">
-      <button onclick="checkPw()"
-        style="width:100%;padding:12px;background:var(--navy);color:white;border:none;font-size:14px;cursor:pointer;font-family:var(--sans);letter-spacing:.06em;">
-        ログイン
-      </button>
-      <p id="pw-error" style="color:#c0392b;font-size:13px;margin-top:8px;display:none;">パスワードが違います</p>
-    </div>
-
-    <!-- 投稿フォーム -->
-    <div id="post-form" style="display:none;">
-      <p style="font-family:var(--serif);font-size:18px;color:var(--navy);margin-bottom:24px;">記事を投稿する</p>
-      <div style="margin-bottom:16px;">
-        <label style="font-size:13px;color:var(--gray-text);display:block;margin-bottom:6px;letter-spacing:.04em;">タイトル</label>
-        <input type="text" id="post-title" placeholder="記事のタイトル"
-          style="width:100%;padding:12px 16px;border:1px solid var(--gray-mid);font-size:14px;font-family:var(--sans);">
-      </div>
-      <div style="margin-bottom:16px;">
-        <label style="font-size:13px;color:var(--gray-text);display:block;margin-bottom:6px;letter-spacing:.04em;">カテゴリ</label>
-        <select id="post-cat"
-          style="width:100%;padding:12px 16px;border:1px solid var(--gray-mid);font-size:14px;font-family:var(--sans);background:white;">
-          <option>相続・終活</option>
-          <option>ライフプラン</option>
-          <option>老後資金</option>
-          <option>節税・保険</option>
-          <option>AI活用</option>
-          <option>その他</option>
-        </select>
-      </div>
-      <div style="margin-bottom:16px;">
-        <label style="font-size:13px;color:var(--gray-text);display:block;margin-bottom:6px;letter-spacing:.04em;">本文</label>
-        <textarea id="post-body" rows="8" placeholder="記事の内容を入力してください..."
-          style="width:100%;padding:12px 16px;border:1px solid var(--gray-mid);font-size:14px;font-family:var(--sans);resize:vertical;line-height:1.8;"></textarea>
-      </div>
-      <div style="display:flex;gap:12px;">
-        <button onclick="submitPost()"
-          style="flex:1;padding:14px;background:var(--gold);color:var(--navy);border:none;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--sans);letter-spacing:.06em;">
-          投稿する
-        </button>
-        <button onclick="document.getElementById('post-form').style.display='none';document.getElementById('pw-screen').style.display='block';document.getElementById('admin-panel').style.display='none';document.querySelector('[onclick*=admin-panel]').style.display='inline-block';"
-          style="padding:14px 24px;background:transparent;color:var(--gray-text);border:1px solid var(--gray-mid);font-size:13px;cursor:pointer;font-family:var(--sans);">
-          閉じる
-        </button>
-      </div>
-      <!-- 投稿済み記事の管理 -->
-      <div id="manage-list" style="margin-top:32px;border-top:1px solid var(--gray-mid);padding-top:24px;"></div>
-    </div>
+    <a href="blog.html" style="font-size:13px;color:var(--navy);background:transparent;border:1px solid var(--navy);padding:12px 32px;letter-spacing:.08em;font-family:var(--sans);text-decoration:none;display:inline-block;">
+      ブログ記事をすべて見る
+    </a>
   </div>
 </section>
 
 <script>
 (function(){
-  const PW = 'suzuki2030';
-  const STORAGE_KEY = 'suzuki_fp_blog';
+  var _posts = [];
 
-  function getPosts(){
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch(e){ return []; }
-  }
-  function savePosts(posts){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-  }
+  fetch('posts.json?_=' + Date.now())
+    .then(function(r){ return r.json(); })
+    .then(function(posts){ _posts = posts; renderBlogList(posts); })
+    .catch(function(){ renderBlogList([]); });
 
-  function renderBlogList(){
-    const posts = getPosts();
-    const list = document.getElementById('blog-list');
-    const empty = document.getElementById('blog-empty');
+  function renderBlogList(posts){
+    var list = document.getElementById('blog-list');
+    var empty = document.getElementById('blog-empty');
     if(!posts.length){ list.innerHTML=''; empty.style.display='block'; return; }
     empty.style.display='none';
-    list.innerHTML = posts.slice().reverse().map((p,i)=>{
-      const idx = posts.length - 1 - i;
-      return `<div style="background:white;border:1px solid #e8e8e4;padding:28px 24px;transition:border-color .2s;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-          <span style="font-size:11px;padding:2px 10px;background:#1a2744;color:#b8975a;letter-spacing:.06em;">${p.cat}</span>
-          <span style="font-size:12px;color:#6b6b6b;">${p.date}</span>
-        </div>
-        <h3 style="font-family:'Noto Serif JP',serif;font-size:17px;color:#1a2744;font-weight:400;margin-bottom:10px;line-height:1.5;">${p.title}</h3>
-        <p style="font-size:13px;color:#6b6b6b;line-height:1.8;">${p.body.length>100?p.body.slice(0,100)+'…':p.body}</p>
-        <button onclick="expandPost(${idx})" style="margin-top:14px;font-size:12px;color:#b8975a;background:transparent;border:none;cursor:pointer;letter-spacing:.04em;padding:0;">続きを読む ›</button>
-      </div>`;
+    var recent = posts.slice(-6).reverse();
+    list.innerHTML = recent.map(function(p, i){
+      var idx = posts.length - 1 - i;
+      return '<div style="background:white;border:1px solid #e8e8e4;padding:28px 24px;transition:border-color .2s;">'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
+        + '<span style="font-size:11px;padding:2px 10px;background:#1a2744;color:#b8975a;letter-spacing:.06em;">' + p.cat + '</span>'
+        + '<span style="font-size:12px;color:#6b6b6b;">' + p.date + '</span>'
+        + '</div>'
+        + '<h3 style="font-family:\'Noto Serif JP\',serif;font-size:17px;color:#1a2744;font-weight:400;margin-bottom:10px;line-height:1.5;">' + p.title + '</h3>'
+        + '<p style="font-size:13px;color:#6b6b6b;line-height:1.8;">' + (p.body.length>100 ? p.body.slice(0,100)+'…' : p.body) + '</p>'
+        + '<button onclick="expandPost(' + idx + ')" style="margin-top:14px;font-size:12px;color:#b8975a;background:transparent;border:none;cursor:pointer;letter-spacing:.04em;padding:0;">続きを読む ›</button>'
+        + '</div>';
     }).join('');
   }
 
   window.expandPost = function(idx){
-    const posts = getPosts();
-    const p = posts[idx];
-    const overlay = document.createElement('div');
+    var p = _posts[idx];
+    if(!p) return;
+    var overlay = document.createElement('div');
     overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;';
-    overlay.innerHTML=`<div style="background:white;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;padding:40px;position:relative;">
-      <button onclick="this.closest('[style*=fixed]').remove()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:20px;cursor:pointer;color:#6b6b6b;">×</button>
-      <span style="font-size:11px;padding:2px 10px;background:#1a2744;color:#b8975a;letter-spacing:.06em;">${p.cat}</span>
-      <p style="font-size:12px;color:#6b6b6b;margin:10px 0 16px;">${p.date}</p>
-      <h2 style="font-family:'Noto Serif JP',serif;font-size:22px;color:#1a2744;font-weight:400;margin-bottom:20px;line-height:1.5;">${p.title}</h2>
-      <p style="font-size:14px;color:#3a3a3a;line-height:2;white-space:pre-wrap;">${p.body}</p>
-    </div>`;
+    overlay.innerHTML='<div style="background:white;max-width:600px;width:100%;max-height:80vh;overflow-y:auto;padding:40px;position:relative;">'
+      + '<button onclick="this.closest(\'[style*=fixed]\').remove()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;font-size:20px;cursor:pointer;color:#6b6b6b;">×</button>'
+      + '<span style="font-size:11px;padding:2px 10px;background:#1a2744;color:#b8975a;letter-spacing:.06em;">' + p.cat + '</span>'
+      + '<p style="font-size:12px;color:#6b6b6b;margin:10px 0 16px;">' + p.date + '</p>'
+      + '<h2 style="font-family:\'Noto Serif JP\',serif;font-size:22px;color:#1a2744;font-weight:400;margin-bottom:20px;line-height:1.5;">' + p.title + '</h2>'
+      + '<p style="font-size:14px;color:#3a3a3a;line-height:2;white-space:pre-wrap;">' + p.body + '</p>'
+      + '</div>';
     document.body.appendChild(overlay);
   };
-
-  function renderManageList(){
-    const posts = getPosts();
-    const el = document.getElementById('manage-list');
-    if(!posts.length){ el.innerHTML='<p style="font-size:13px;color:#6b6b6b;">投稿した記事はここに表示されます</p>'; return; }
-    el.innerHTML='<p style="font-size:13px;color:#6b6b6b;margin-bottom:12px;letter-spacing:.04em;">投稿済み記事</p>'+
-      posts.slice().reverse().map((p,i)=>{
-        const idx=posts.length-1-i;
-        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #e8e8e4;font-size:13px;">
-          <span style="color:#1a2744;flex:1;margin-right:12px;">${p.title}</span>
-          <span style="color:#6b6b6b;font-size:12px;margin-right:12px;">${p.date}</span>
-          <button onclick="deletePost(${idx})" style="color:#c0392b;background:transparent;border:none;cursor:pointer;font-size:12px;">削除</button>
-        </div>`;
-      }).join('');
-  }
-
-  window.deletePost = function(idx){
-    if(!confirm('この記事を削除しますか？')) return;
-    const posts = getPosts();
-    posts.splice(idx,1);
-    savePosts(posts);
-    renderBlogList();
-    renderManageList();
-  };
-
-  window.checkPw = function(){
-    const val = document.getElementById('pw-input').value;
-    if(val===PW){
-      document.getElementById('pw-screen').style.display='none';
-      document.getElementById('post-form').style.display='block';
-      document.getElementById('pw-input').value='';
-      document.getElementById('pw-error').style.display='none';
-      renderManageList();
-    } else {
-      document.getElementById('pw-error').style.display='block';
-    }
-  };
-
-  window.submitPost = function(){
-    const title = document.getElementById('post-title').value.trim();
-    const body  = document.getElementById('post-body').value.trim();
-    const cat   = document.getElementById('post-cat').value;
-    if(!title||!body){ alert('タイトルと本文を入力してください'); return; }
-    const posts = getPosts();
-    const now = new Date();
-    const date = now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日';
-    posts.push({title,body,cat,date});
-    savePosts(posts);
-    document.getElementById('post-title').value='';
-    document.getElementById('post-body').value='';
-    renderBlogList();
-    renderManageList();
-    alert('投稿しました！');
-  };
-
-  document.getElementById('pw-input') && document.getElementById('pw-input').addEventListener('keydown',function(e){
-    if(e.key==='Enter') window.checkPw();
-  });
-
-  renderBlogList();
 })();
 </script>
 
