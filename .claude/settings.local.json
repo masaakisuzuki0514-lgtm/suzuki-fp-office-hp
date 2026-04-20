@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm list:*)",
+      "Bash(export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\")",
+      "Bash(export PATH=$HOME/.nvm/versions/node/v24.14.1/bin:$PATH)",
+      "Bash(node make_osuzuki_slides.js)",
+      "Bash(npm root:*)",
+      "Bash(NODE_PATH=\"$HOME/.nvm/versions/node/v24.14.1/lib/node_modules\" node /Users/suzukishouakira/Desktop/相続関連/make_osuzuki_slides.js)",
+      "Bash(export PATH=\"$HOME/.nvm/versions/node/v24.14.1/bin:$PATH\" SKILL_DIR=\"/Users/suzukishouakira/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/f28e17a4-f14b-45a5-9303-04d9627a9274/07349ed9-4da1-4b36-a826-198fd921fce2/skills/pptx\" cd /Users/suzukishouakira/Desktop/相続関連 python3 \"$SKILL_DIR/scripts/office/soffice.py\" --headless --convert-to pdf おすずきさんを偲んで.pptx)",
+      "Bash(pip3 install:*)",
+      "Bash(tail -3 python3 -c \"from markitdown import MarkItDown; md = MarkItDown\\(\\); r = md.convert\\(''''/Users/suzukishouakira/Desktop/相続関連/おすずきさんを偲んで.pptx''''\\); print\\(r.text_content[:2000]\\)\")",
+      "mcp__384033b2-b96a-4a22-9a76-f8455bd425d2__generate-design",
+      "Read(//private/tmp/**)",
+      "Bash(curl -s -L \"https://design.canva.ai/iYZBn8iobboxaIN\" -o canva_A.jpg)",
+      "Bash(curl -s -L \"https://design.canva.ai/veex8LRHmI0s-my\" -o canva_B.jpg)",
+      "Bash(curl -s -L \"https://design.canva.ai/S52j7Tv_Oj7nGab\" -o canva_C.jpg)",
+      "Bash(curl -s -L \"https://design.canva.ai/ymv97eLSE0D4Rfm\" -o canva_D.jpg)",
+      "WebFetch(domain:library.libecity.com)",
+      "Bash(open \"/Users/suzukishouakira/Desktop/高配当株スプシ管理/thumbnail.html\")",
+      "WebFetch(domain:ieben.net)",
+      "WebFetch(domain:happylilac.net)",
+      "WebFetch(domain:www.start-point.net)",
+      "WebFetch(domain:mameppu.com)",
+      "WebFetch(domain:happy-clover.com)",
+      "WebFetch(domain:xn--fdk3a7ctb5192box5b.com)",
+      "WebFetch(domain:sb.hokennomadoguchi.com)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(mkdir -p /tmp/fp-site)",
+      "Bash(cp \"/Users/suzukishouakira/Desktop/高配当株スプシ管理/index.html\" /tmp/fp-site/index.html)",
+      "Bash(ln -s \"/Users/suzukishouakira/Desktop/高配当株スプシ管理\" /tmp/fp-site)"
+    ]
+  }
+}
