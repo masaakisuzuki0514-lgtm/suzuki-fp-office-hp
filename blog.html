@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブログ｜鈴木未来設計FP事務所</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #dc2823;
+      --red-dark: #9f0000;
+      --white: #ffffff;
+      --gray-bg: #f7f7f7;
+      --gray-border: #e0e0e0;
+      --gray-text: #666666;
+      --text: #1a1a1a;
+      --sans: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); color: var(--text); background: var(--white); font-weight: 400; line-height: 1.75; padding-bottom: 80px; }
+
+    /* ヘッダー */
+    header { position: sticky; top: 0; z-index: 200; background: var(--white); border-bottom: 3px solid var(--red); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .logo-main { font-size: 18px; font-weight: 900; color: var(--red); text-decoration: none; display: block; }
+    .logo-sub { font-size: 10px; color: var(--gray-text); letter-spacing: .1em; display: block; }
+    .header-nav { display: flex; gap: 24px; list-style: none; margin-right: 8px; }
+    .header-nav a { font-size: 13px; color: var(--gray-text); text-decoration: none; font-weight: 500; letter-spacing: .04em; transition: color .2s; white-space: nowrap; }
+    .header-nav a:hover { color: var(--red); }
+    .header-nav a.active { color: var(--red); font-weight: 700; border-bottom: 2px solid var(--red); padding-bottom: 2px; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .btn-header { background: linear-gradient(to bottom, var(--red), #c0201c); color: var(--white); padding: 10px 20px; border-radius: 4px; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 0 var(--red-dark); display: inline-block; white-space: nowrap; }
+
+    /* ページヘッダー */
+    .page-hero { background: linear-gradient(135deg, #b01010, var(--red)); padding: 48px 24px; text-align: center; }
+    .page-hero h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; color: var(--white); margin-bottom: 10px; }
+    .page-hero p { font-size: 15px; color: rgba(255,255,255,0.8); }
+
+    /* メインレイアウト */
+    .blog-wrap { max-width: 1000px; margin: 0 auto; padding: 56px 24px; display: grid; grid-template-columns: 1fr 280px; gap: 40px; align-items: start; }
+
+    /* 記事一覧 */
+    .post-list { display: flex; flex-direction: column; gap: 24px; }
+    .post-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: 10px; overflow: hidden; transition: box-shadow .2s, transform .2s; }
+    .post-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .post-card-img { width: 100%; height: 200px; object-fit: cover; display: block; background: var(--gray-bg); }
+    .post-card-body { padding: 24px; }
+    .post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    .post-date { font-size: 12px; color: var(--gray-text); }
+    .post-cat { background: var(--red); color: var(--white); font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; }
+    .post-card h2 { font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: 10px; }
+    .post-card h2 a { color: var(--text); text-decoration: none; }
+    .post-card h2 a:hover { color: var(--red); }
+    .post-excerpt { font-size: 14px; color: var(--gray-text); line-height: 1.8; margin-bottom: 16px; }
+    .post-readmore { font-size: 13px; color: var(--red); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+    .post-readmore:hover { text-decoration: underline; }
+
+    /* サイドバー */
+    .sidebar { position: sticky; top: 88px; }
+    .sidebar-block { background: var(--white); border: 1px solid var(--gray-border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    .sidebar-block h3 { font-size: 14px; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--red); color: var(--text); }
+    .sidebar-cats { display: flex; flex-direction: column; gap: 0; }
+    .sidebar-cat { display: flex; justify-content: space-between; align-items: center; padding: 9px 4px; border-bottom: 1px solid var(--gray-border); font-size: 13px; cursor: pointer; text-decoration: none; color: var(--text); transition: color .2s; }
+    .sidebar-cat:last-child { border-bottom: none; }
+    .sidebar-cat:hover { color: var(--red); }
+    .sidebar-cat-count { background: var(--gray-bg); color: var(--gray-text); font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+    .recent-list { display: flex; flex-direction: column; gap: 12px; }
+    .recent-item { display: flex; gap: 10px; align-items: flex-start; }
+    .recent-item-date { font-size: 11px; color: var(--gray-text); white-space: nowrap; margin-top: 2px; }
+    .recent-item-title { font-size: 13px; line-height: 1.6; }
+    .recent-item-title a { color: var(--text); text-decoration: none; }
+    .recent-item-title a:hover { color: var(--red); }
+    .profile-mini { text-align: center; }
+    .profile-mini-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; display: block; border: 3px solid var(--red); }
+    .profile-mini-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .profile-mini-title { font-size: 11px; color: var(--gray-text); margin-bottom: 10px; }
+    .profile-mini-tags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-bottom: 12px; }
+    .profile-mini-tag { background: var(--red); color: var(--white); font-size: 10px; padding: 2px 8px; border-radius: 20px; }
+    .profile-mini-text { font-size: 12px; color: var(--gray-text); line-height: 1.8; text-align: left; }
+    .sidebar-cta-btn { display: block; background: linear-gradient(to bottom, var(--red), #c0201c); color: var(--white); text-align: center; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 0 var(--red-dark); margin-top: 14px; }
+
+    /* 記事詳細 */
+    .post-detail { display: none; background: var(--white); border: 1px solid var(--gray-border); border-radius: 10px; padding: 32px; }
+    .post-detail.active { display: block; }
+    .post-detail-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--red); cursor: pointer; margin-bottom: 24px; font-weight: 700; background: none; border: none; font-family: var(--sans); }
+    .post-detail-back:hover { text-decoration: underline; }
+    .post-detail h1 { font-size: clamp(20px, 3vw, 28px); font-weight: 900; line-height: 1.5; margin-bottom: 16px; }
+    .post-detail-content { font-size: 15px; line-height: 2; color: var(--text); }
+    .post-detail-content h2 { font-size: 20px; font-weight: 700; margin: 32px 0 12px; padding-left: 14px; border-left: 4px solid var(--red); }
+    .post-detail-content h3 { font-size: 17px; font-weight: 700; margin: 24px 0 10px; color: var(--red); }
+    .post-detail-content p { margin-bottom: 16px; }
+    .post-detail-content ul { padding-left: 20px; margin-bottom: 16px; }
+    .post-detail-content ul li { margin-bottom: 6px; }
+    .post-detail-content .highlight { background: #fff5f5; border-left: 4px solid var(--red); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 20px 0; }
+    .post-detail-content .highlight p { margin: 0; }
+
+    /* フローティングCTA */
+    .floating-cta { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(20,20,20,0.94); backdrop-filter: blur(8px); padding: 10px 14px; display: flex; gap: 10px; justify-content: center; z-index: 300; border-top: 2px solid var(--red); }
+    .floating-cta a { flex: 1; max-width: 230px; background: linear-gradient(to bottom, var(--red), #c0201c); color: var(--white); text-align: center; padding: 11px 8px; border-radius: 4px; font-size: 13px; font-weight: 700; text-decoration: none; box-shadow: 0 3px 0 var(--red-dark); }
+    .floating-cta a small { display: block; font-size: 10px; font-weight: 400; opacity: .85; margin-top: 2px; }
+    .floating-cta a.outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.4); box-shadow: none; }
+
+    footer { background: #111; padding: 28px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); }
+    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); width: 100%; text-align: center; margin-top: 8px; }
+
+    @media (max-width: 780px) {
+      .header-nav { display: none; }
+      .blog-wrap { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header>
+  <div class="logo">
+    <a href="index.html" class="logo-main">鈴木未来設計FP事務所</a>
+    <span class="logo-sub">SUZUKI MIRAI SEKKEI FP OFFICE</span>
+  </div>
+  <ul class="header-nav">
+    <li><a href="index.html">ホーム</a></li>
+    <li><a href="index.html#service">サービス</a></li>
+    <li><a href="index.html#profile">プロフィール</a></li>
+    <li><a href="blog.html" class="active">ブログ</a></li>
+    <li><a href="index.html#contact">お問い合わせ</a></li>
+  </ul>
+  <div class="header-right">
+    <a href="index.html#contact" class="btn-header">無料で相談する</a>
+  </div>
+</header>
+
+<!-- ページヘッダー -->
+<div class="page-hero">
+  <h1>FPブログ</h1>
+  <p>老後・相続・保険・資産運用に関する情報を毎日更新しています</p>
+</div>
+
+<!-- 記事一覧 / 詳細エリア -->
+<div class="blog-wrap">
+  <main>
+    <!-- 記事一覧 -->
+    <div class="post-list" id="postList"></div>
+    <!-- 記事詳細 -->
+    <div class="post-detail" id="postDetail">
+      <button class="post-detail-back" onclick="showList()">← 記事一覧に戻る</button>
+      <div class="post-meta" id="detailMeta"></div>
+      <h1 id="detailTitle"></h1>
+      <div class="post-detail-content" id="detailContent"></div>
+    </div>
+  </main>
+
+  <!-- サイドバー -->
+  <aside class="sidebar">
+    <!-- プロフィール -->
+    <div class="sidebar-block">
+      <h3>著者プロフィール</h3>
+      <div class="profile-mini">
+        <div class="profile-mini-img" style="background:var(--red);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;border-radius:50%;">鈴</div>
+        <div class="profile-mini-name">鈴木 唱晃</div>
+        <div class="profile-mini-title">鈴木未来設計FP事務所 代表</div>
+        <div class="profile-mini-tags">
+          <span class="profile-mini-tag">AFP</span>
+          <span class="profile-mini-tag">相続診断士</span>
+          <span class="profile-mini-tag">FP2級</span>
+        </div>
+        <p class="profile-mini-text">独立系FPとして、50・60代の老後設計・相続対策を専門にサポート。AI活用で当日シミュレーション提供。</p>
+        <a href="index.html#contact" class="sidebar-cta-btn">無料相談を申し込む →</a>
+      </div>
+    </div>
+
+    <!-- カテゴリ -->
+    <div class="sidebar-block">
+      <h3>カテゴリ</h3>
+      <div class="sidebar-cats" id="catList"></div>
+    </div>
+
+    <!-- 最新記事 -->
+    <div class="sidebar-block">
+      <h3>最新記事</h3>
+      <div class="recent-list" id="recentList"></div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-logo">鈴木未来設計FP事務所</div>
+  <div class="footer-links">
+    <a href="index.html">ホーム</a>
+    <a href="#">プライバシーポリシー</a>
+    <a href="index.html#contact">お問い合わせ</a>
+  </div>
+  <p class="footer-copy">© 2025 鈴木未来設計FP事務所. All Rights Reserved.</p>
+</footer>
+
+<div class="floating-cta">
+  <a href="index.html#contact">無料相談を申し込む<small>完全無料・セールスなし</small></a>
+  <a href="mailto:info@suzuki-fp.jp" class="outline">メールで問い合わせ<small>info@suzuki-fp.jp</small></a>
+</div>
+
+<script>
+// ============================================================
+// ブログ記事データ
+// 新しい記事を追加するときは、posts配列の先頭に追加してください
+// id は連番で増やしてください
+// ============================================================
+const posts = [
+  {
+    id: 5,
+    date: "2025年4月20日",
+    cat: "NISA・資産運用",
+    title: "NISAで「何を買うか」より大切なこと",
+    excerpt: "NISAで「何を買えばいいか」という質問をよく受けます。でも実は、商品選びより先に考えるべきことがあります。それは「いつまでにいくら必要か」という目標設定です。",
+    img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+    content: `
+      <p>NISAで「何を買えばいいか」という質問をよく受けます。</p>
+      <p>でも実は、商品選びより先に考えるべきことがあります。それは<strong>「いつまでにいくら必要か」</strong>という目標設定です。</p>
+
+      <h2>目標が決まれば商品は自然と絞られる</h2>
+      <p>たとえば「65歳までに老後資金として1,500万円を準備したい。今40歳」という目標があれば、逆算できます。</p>
+      <ul>
+        <li>期間：25年</li>
+        <li>年利3%で運用した場合、毎月の積立額は約3.6万円</li>
+        <li>であれば、長期・分散・低コストのインデックス投資が適している</li>
+      </ul>
+      <p>目標から逆算すると、商品の選択肢は自然と絞られます。</p>
+
+      <h2>よくある失敗パターン</h2>
+      <p>目標なしにNISAを始めると、次のような失敗に陥りがちです。</p>
+      <ul>
+        <li>SNSで話題の銘柄を買って値下がりに動揺し売ってしまう</li>
+        <li>「今月は何を買おうか」と毎月迷ってしまう</li>
+        <li>積立額が少なすぎて目標に届かない</li>
+      </ul>
+
+      <div class="highlight">
+        <p>💡 <strong>まとめ</strong>：NISAを始める前に、まずライフプランを作りましょう。目標額が決まれば、積立額も商品も自然と決まります。不安な方はFP相談を活用してください。</p>
+      </div>
+    `
+  },
+  {
+    id: 4,
+    date: "2025年4月19日",
+    cat: "相続・贈与",
+    title: "相続は「お金持ちだけの話」ではない理由",
+    excerpt: "「うちは財産なんてないから相続は関係ない」という声をよく聞きます。しかし実際には、預金が少額でも不動産があれば相続税の計算が必要なケースがあります。",
+    img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+    content: `
+      <p>「うちは財産なんてないから相続は関係ない」という声をよく聞きます。</p>
+      <p>しかし実際には、<strong>預金が少額でも不動産があれば相続税の計算が必要なケースがあります。</strong></p>
+
+      <h2>相続税の基礎控除とは</h2>
+      <p>相続税には「基礎控除」があります。計算式は次の通りです。</p>
+      <ul>
+        <li>基礎控除額 = 3,000万円 + 600万円 × 法定相続人の数</li>
+        <li>例：相続人が2人の場合 → 3,000万円 + 1,200万円 = 4,200万円</li>
+      </ul>
+      <p>財産の合計がこの金額を超えると、相続税が発生します。</p>
+
+      <h2>不動産があると要注意</h2>
+      <p>親が自宅を持っている場合、土地・建物の評価額が意外と高くなることがあります。特に都市部では土地だけで数千万円になるケースも。</p>
+
+      <div class="highlight">
+        <p>💡 <strong>早めの確認を</strong>：親が健在のうちに財産の全容を把握し、相続税の概算を出しておくことが大切です。相続診断士への相談は無料でできます。まずはお気軽にどうぞ。</p>
+      </div>
+    `
+  },
+  {
+    id: 3,
+    date: "2025年4月18日",
+    cat: "保険・家計",
+    title: "保険の見直しで月2万円節約できた事例",
+    excerpt: "先日ご相談いただいた50代のご夫婦の事例をご紹介します。月々の保険料が約6万円。重複加入を整理するだけで月3万7千円まで削減できました。",
+    img: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&q=80",
+    content: `
+      <p>先日ご相談いただいた50代のご夫婦の事例をご紹介します。</p>
+
+      <h2>相談前の状況</h2>
+      <ul>
+        <li>月々の保険料：約6万円（5本加入）</li>
+        <li>若い頃から何となく入り続けた保険が積み重なった状態</li>
+        <li>「高すぎる気がするが、何を解約していいかわからない」</li>
+      </ul>
+
+      <h2>見直しのポイント</h2>
+      <p>保険の見直しで最初に確認するのは<strong>「重複カバー」</strong>です。</p>
+      <ul>
+        <li>医療保険が2本 → 1本で十分なカバーが可能</li>
+        <li>死亡保障が過剰 → お子さんが独立済みのため減額可</li>
+        <li>貯蓄型保険 → 返戻率が低く、NISA積立に切り替えがお得</li>
+      </ul>
+
+      <h2>見直し後の結果</h2>
+      <p>5本から3本に集約し、保険料は月<strong>3万7千円</strong>に。月2万3千円の削減に成功しました。</p>
+      <p>浮いた2万3千円は積立NISAへ。長期運用で老後資金の積み増しに活用しています。</p>
+
+      <div class="highlight">
+        <p>💡 <strong>ポイント</strong>：保険の見直しは「保障を減らす」のではなく「必要な保障だけを残す」作業です。中立なFPに診断してもらうことで、適正な保障が見えてきます。</p>
+      </div>
+    `
+  },
+  {
+    id: 2,
+    date: "2025年4月17日",
+    cat: "老後設計",
+    title: "iDeCoを「引き出せない」と嫌がる人へ",
+    excerpt: "iDeCoは60歳まで引き出せないのがデメリットと言われます。でもこれ、裏を返せば最強の老後専用口座です。なぜそう言えるのかを解説します。",
+    img: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&q=80",
+    content: `
+      <p>「iDeCoは60歳まで引き出せないから嫌」という声をよく聞きます。</p>
+      <p>でも私はこれを<strong>「最大のメリット」</strong>だと考えています。</p>
+
+      <h2>引き出せないことの価値</h2>
+      <p>貯蓄が苦手な人にとって、「使えないお金」は最強の仕組みです。</p>
+      <ul>
+        <li>急な出費で取り崩す心配がない</li>
+        <li>相場が下がっても「どうせ引き出せない」と冷静でいられる</li>
+        <li>老後専用として確実に積み上がる</li>
+      </ul>
+
+      <h2>税制メリットも強力</h2>
+      <ul>
+        <li>掛け金が全額所得控除 → 毎年の税金が減る</li>
+        <li>運用益が非課税</li>
+        <li>受け取り時も退職所得控除・公的年金控除が使える</li>
+      </ul>
+
+      <div class="highlight">
+        <p>💡 <strong>まとめ</strong>：iDeCoの「引き出せない」は欠点ではなく設計上の強みです。節税しながら老後資金を強制的に積み立てられる、優秀な制度です。</p>
+      </div>
+    `
+  },
+  {
+    id: 1,
+    date: "2025年4月16日",
+    cat: "老後設計",
+    title: "老後資金の計算で「インフレ」を忘れていませんか？",
+    excerpt: "老後2,000万円問題で話題になりましたが、この2,000万円はあくまで現在の物価ベース。30年後も同じ物価とは限りません。インフレを考慮した老後設計の考え方を解説します。",
+    img: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=800&q=80",
+    content: `
+      <p>「老後に2,000万円必要」という話、一度は耳にしたことがあると思います。</p>
+      <p>でも、この2,000万円は<strong>「現在の物価ベース」</strong>の数字です。30年後も同じ価値があるとは限りません。</p>
+
+      <h2>インフレとは何か</h2>
+      <p>インフレとは物価が上がること。年率2%のインフレが続くと、30年後には物価が約1.8倍になります。</p>
+      <p>つまり、今の2,000万円と同じ生活をするためには、30年後には約3,600万円必要になる計算です。</p>
+
+      <h2>現金だけで貯めるリスク</h2>
+      <ul>
+        <li>銀行預金の金利はほぼゼロ</li>
+        <li>物価が上がれば預金の実質価値は下がる</li>
+        <li>インフレに負けない運用が必要</li>
+      </ul>
+
+      <h2>インフレに強い資産とは</h2>
+      <p>株式や不動産はインフレに比較的強いとされています。NISAやiDeCoを使ったインデックス投資が有効な手段の一つです。</p>
+
+      <div class="highlight">
+        <p>💡 <strong>結論</strong>：老後資金の計画はインフレを想定した実質ベースで考えましょう。FP相談では、インフレを加味したキャッシュフロー表も作成しています。</p>
+      </div>
+    `
+  }
+];
+
+// カテゴリ集計
+const catCount = {};
+posts.forEach(p => { catCount[p.cat] = (catCount[p.cat] || 0) + 1; });
+
+// カテゴリ一覧描画
+document.getElementById('catList').innerHTML =
+  Object.entries(catCount).map(([cat, count]) =>
+    `<a class="sidebar-cat" onclick="filterCat('${cat}')">${cat}<span class="sidebar-cat-count">${count}</span></a>`
+  ).join('');
+
+// 最新記事描画
+document.getElementById('recentList').innerHTML =
+  posts.slice(0, 4).map(p =>
+    `<div class="recent-item">
+      <div class="recent-item-date">${p.date.replace('2025年','').replace('日','')}</div>
+      <div class="recent-item-title"><a href="#" onclick="showPost(${p.id});return false;">${p.title}</a></div>
+    </div>`
+  ).join('');
+
+let currentFilter = null;
+
+function renderPosts(list) {
+  document.getElementById('postList').innerHTML = list.map(p => `
+    <div class="post-card">
+      <img class="post-card-img" src="${p.img}" alt="${p.title}" loading="lazy">
+      <div class="post-card-body">
+        <div class="post-meta">
+          <span class="post-date">${p.date}</span>
+          <span class="post-cat">${p.cat}</span>
+        </div>
+        <h2><a href="#" onclick="showPost(${p.id});return false;">${p.title}</a></h2>
+        <p class="post-excerpt">${p.excerpt}</p>
+        <a href="#" class="post-readmore" onclick="showPost(${p.id});return false;">続きを読む →</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCat(cat) {
+  currentFilter = cat;
+  renderPosts(posts.filter(p => p.cat === cat));
+  document.getElementById('postList').style.display = 'flex';
+  document.getElementById('postDetail').classList.remove('active');
+}
+
+function showPost(id) {
+  const p = posts.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('detailMeta').innerHTML =
+    `<span class="post-date">${p.date}</span><span class="post-cat">${p.cat}</span>`;
+  document.getElementById('detailTitle').textContent = p.title;
+  document.getElementById('detailContent').innerHTML = p.content;
+  document.getElementById('postList').style.display = 'none';
+  document.getElementById('postDetail').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showList() {
+  document.getElementById('postList').style.display = 'flex';
+  document.getElementById('postDetail').classList.remove('active');
+}
+
+// 初期描画
+renderPosts(posts);
+</script>
+
+</body>
+</html>
