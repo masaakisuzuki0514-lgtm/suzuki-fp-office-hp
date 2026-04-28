@@ -4,112 +4,131 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ブログ｜鈴木未来設計FP事務所</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --red: #dc2823;
-      --red-dark: #9f0000;
+      --navy: #1a2744;
+      --navy-mid: #243258;
+      --navy-light: #2e3f6e;
+      --gold: #b8975a;
+      --gold-light: #d4b87a;
+      --gray-light: #f5f5f3;
+      --gray-mid: #e8e8e4;
+      --gray-text: #6b6b6b;
       --white: #ffffff;
-      --gray-bg: #f7f7f7;
-      --gray-border: #e0e0e0;
-      --gray-text: #666666;
       --text: #1a1a1a;
-      --sans: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+      --serif: 'Noto Serif JP', serif;
+      --sans: 'Noto Sans JP', sans-serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: var(--sans); color: var(--text); background: var(--white); font-weight: 400; line-height: 1.75; padding-bottom: 80px; }
+    body { font-family: var(--sans); color: var(--text); background: var(--white); font-weight: 300; line-height: 1.8; padding-bottom: 80px; }
 
     /* ヘッダー */
-    header { position: sticky; top: 0; z-index: 200; background: var(--white); border-bottom: 3px solid var(--red); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .logo-main { font-size: 18px; font-weight: 900; color: var(--red); text-decoration: none; display: block; }
-    .logo-sub { font-size: 10px; color: var(--gray-text); letter-spacing: .1em; display: block; }
-    .header-nav { display: flex; gap: 24px; list-style: none; margin-right: 8px; }
-    .header-nav a { font-size: 13px; color: var(--gray-text); text-decoration: none; font-weight: 500; letter-spacing: .04em; transition: color .2s; white-space: nowrap; }
-    .header-nav a:hover { color: var(--red); }
-    .header-nav a.active { color: var(--red); font-weight: 700; border-bottom: 2px solid var(--red); padding-bottom: 2px; }
+    header { position: sticky; top: 0; z-index: 200; background: rgba(26,39,68,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(184,151,90,0.3); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo-main { font-family: var(--serif); font-size: 15px; font-weight: 400; color: var(--white); text-decoration: none; display: block; letter-spacing: .05em; }
+    .logo-sub { font-size: 10px; color: var(--gold); letter-spacing: .12em; display: block; font-family: var(--sans); font-weight: 300; }
+    .header-nav { display: flex; gap: 28px; list-style: none; }
+    .header-nav a { font-size: 13px; color: rgba(255,255,255,0.8); text-decoration: none; font-weight: 300; letter-spacing: .08em; transition: color .2s; white-space: nowrap; }
+    .header-nav a:hover { color: var(--gold-light); }
+    .header-nav a.active { color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
     .header-right { display: flex; align-items: center; gap: 12px; }
-    .btn-header { background: linear-gradient(to bottom, var(--red), #c0201c); color: var(--white); padding: 10px 20px; border-radius: 4px; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 0 var(--red-dark); display: inline-block; white-space: nowrap; }
+    .btn-header { background: var(--gold); color: var(--navy); padding: 9px 20px; border-radius: 2px; font-size: 13px; font-weight: 500; text-decoration: none; display: inline-block; white-space: nowrap; letter-spacing: .06em; transition: background .2s; }
+    .btn-header:hover { background: var(--gold-light); }
 
     /* ページヘッダー */
-    .page-hero { background: linear-gradient(135deg, #b01010, var(--red)); padding: 48px 24px; text-align: center; }
-    .page-hero h1 { font-size: clamp(26px, 4vw, 40px); font-weight: 900; color: var(--white); margin-bottom: 10px; }
-    .page-hero p { font-size: 15px; color: rgba(255,255,255,0.8); }
+    .page-hero { background: var(--navy); padding: 56px 24px; text-align: center; border-bottom: 1px solid rgba(184,151,90,0.3); }
+    .page-hero h1 { font-family: var(--serif); font-size: clamp(24px, 4vw, 38px); font-weight: 400; color: var(--white); margin-bottom: 10px; letter-spacing: .05em; }
+    .page-hero p { font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: .04em; }
 
     /* メインレイアウト */
     .blog-wrap { max-width: 1000px; margin: 0 auto; padding: 56px 24px; display: grid; grid-template-columns: 1fr 280px; gap: 40px; align-items: start; }
 
     /* 記事一覧 */
     .post-list { display: flex; flex-direction: column; gap: 24px; }
-    .post-card { background: var(--white); border: 1px solid var(--gray-border); border-radius: 10px; overflow: hidden; transition: box-shadow .2s, transform .2s; }
-    .post-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-2px); }
-    .post-card-img { width: 100%; height: 200px; object-fit: cover; display: block; background: var(--gray-bg); }
+    .post-card { background: var(--white); border: 1px solid var(--gray-mid); border-radius: 4px; overflow: hidden; transition: box-shadow .2s, transform .2s; }
+    .post-card:hover { box-shadow: 0 6px 24px rgba(26,39,68,0.1); transform: translateY(-2px); }
+    .post-card-img { width: 100%; height: 200px; object-fit: cover; display: block; background: var(--gray-light); }
     .post-card-body { padding: 24px; }
     .post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
-    .post-date { font-size: 12px; color: var(--gray-text); }
-    .post-cat { background: var(--red); color: var(--white); font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; }
-    .post-card h2 { font-size: 18px; font-weight: 700; line-height: 1.5; margin-bottom: 10px; }
+    .post-date { font-size: 12px; color: var(--gray-text); letter-spacing: .04em; }
+    .post-cat { background: var(--navy); color: var(--gold); font-size: 10px; font-weight: 400; padding: 2px 10px; border-radius: 20px; letter-spacing: .06em; }
+    .post-card h2 { font-family: var(--serif); font-size: 18px; font-weight: 400; line-height: 1.6; margin-bottom: 10px; }
     .post-card h2 a { color: var(--text); text-decoration: none; }
-    .post-card h2 a:hover { color: var(--red); }
-    .post-excerpt { font-size: 14px; color: var(--gray-text); line-height: 1.8; margin-bottom: 16px; }
-    .post-readmore { font-size: 13px; color: var(--red); font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
-    .post-readmore:hover { text-decoration: underline; }
+    .post-card h2 a:hover { color: var(--navy-light); }
+    .post-excerpt { font-size: 14px; color: var(--gray-text); line-height: 1.9; margin-bottom: 16px; font-weight: 300; }
+    .post-readmore { font-size: 13px; color: var(--gold); font-weight: 400; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; letter-spacing: .04em; }
+    .post-readmore:hover { color: var(--gold-light); }
 
     /* サイドバー */
-    .sidebar { position: sticky; top: 88px; }
-    .sidebar-block { background: var(--white); border: 1px solid var(--gray-border); border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-    .sidebar-block h3 { font-size: 14px; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--red); color: var(--text); }
+    .sidebar { position: sticky; top: 84px; }
+    .sidebar-block { background: var(--white); border: 1px solid var(--gray-mid); border-radius: 4px; padding: 20px; margin-bottom: 20px; }
+    .sidebar-block h3 { font-family: var(--serif); font-size: 14px; font-weight: 400; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--gold); color: var(--navy); letter-spacing: .06em; }
     .sidebar-cats { display: flex; flex-direction: column; gap: 0; }
-    .sidebar-cat { display: flex; justify-content: space-between; align-items: center; padding: 9px 4px; border-bottom: 1px solid var(--gray-border); font-size: 13px; cursor: pointer; text-decoration: none; color: var(--text); transition: color .2s; }
+    .sidebar-cat { display: flex; justify-content: space-between; align-items: center; padding: 9px 4px; border-bottom: 1px solid var(--gray-mid); font-size: 13px; cursor: pointer; text-decoration: none; color: var(--text); transition: color .2s; font-weight: 300; }
     .sidebar-cat:last-child { border-bottom: none; }
-    .sidebar-cat:hover { color: var(--red); }
-    .sidebar-cat-count { background: var(--gray-bg); color: var(--gray-text); font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+    .sidebar-cat:hover { color: var(--navy-light); }
+    .sidebar-cat-count { background: var(--gray-light); color: var(--gray-text); font-size: 11px; padding: 2px 8px; border-radius: 20px; }
     .recent-list { display: flex; flex-direction: column; gap: 12px; }
     .recent-item { display: flex; gap: 10px; align-items: flex-start; }
     .recent-item-date { font-size: 11px; color: var(--gray-text); white-space: nowrap; margin-top: 2px; }
-    .recent-item-title { font-size: 13px; line-height: 1.6; }
+    .recent-item-title { font-size: 13px; line-height: 1.6; font-weight: 300; }
     .recent-item-title a { color: var(--text); text-decoration: none; }
-    .recent-item-title a:hover { color: var(--red); }
+    .recent-item-title a:hover { color: var(--navy-light); }
     .profile-mini { text-align: center; }
-    .profile-mini-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; display: block; border: 3px solid var(--red); }
-    .profile-mini-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-    .profile-mini-title { font-size: 11px; color: var(--gray-text); margin-bottom: 10px; }
+    .profile-mini-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; display: block; border: 2px solid var(--gold); }
+    .profile-mini-name { font-family: var(--serif); font-size: 15px; font-weight: 400; margin-bottom: 4px; }
+    .profile-mini-title { font-size: 11px; color: var(--gray-text); margin-bottom: 10px; letter-spacing: .04em; }
     .profile-mini-tags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin-bottom: 12px; }
-    .profile-mini-tag { background: var(--red); color: var(--white); font-size: 10px; padding: 2px 8px; border-radius: 20px; }
-    .profile-mini-text { font-size: 12px; color: var(--gray-text); line-height: 1.8; text-align: left; }
-    .sidebar-cta-btn { display: block; background: linear-gradient(to bottom, var(--red), #c0201c); color: var(--white); text-align: center; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 0 var(--red-dark); margin-top: 14px; }
+    .profile-mini-tag { background: var(--navy); color: var(--gold); font-size: 10px; padding: 2px 8px; border-radius: 20px; letter-spacing: .04em; }
+    .profile-mini-text { font-size: 12px; color: var(--gray-text); line-height: 1.8; text-align: left; font-weight: 300; }
+    .sidebar-cta-btn { display: block; background: var(--gold); color: var(--navy); text-align: center; padding: 12px; border-radius: 2px; font-size: 13px; font-weight: 500; text-decoration: none; margin-top: 14px; letter-spacing: .06em; transition: background .2s; }
+    .sidebar-cta-btn:hover { background: var(--gold-light); }
 
     /* 記事詳細 */
-    .post-detail { display: none; background: var(--white); border: 1px solid var(--gray-border); border-radius: 10px; padding: 32px; }
+    .post-detail { display: none; background: var(--white); border: 1px solid var(--gray-mid); border-radius: 4px; padding: 32px; }
     .post-detail.active { display: block; }
-    .post-detail-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--red); cursor: pointer; margin-bottom: 24px; font-weight: 700; background: none; border: none; font-family: var(--sans); }
-    .post-detail-back:hover { text-decoration: underline; }
-    .post-detail h1 { font-size: clamp(20px, 3vw, 28px); font-weight: 900; line-height: 1.5; margin-bottom: 16px; }
-    .post-detail-content { font-size: 15px; line-height: 2; color: var(--text); }
-    .post-detail-content h2 { font-size: 20px; font-weight: 700; margin: 32px 0 12px; padding-left: 14px; border-left: 4px solid var(--red); }
-    .post-detail-content h3 { font-size: 17px; font-weight: 700; margin: 24px 0 10px; color: var(--red); }
+    .post-detail-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gold); cursor: pointer; margin-bottom: 24px; font-weight: 400; background: none; border: none; font-family: var(--sans); letter-spacing: .04em; }
+    .post-detail-back:hover { color: var(--gold-light); }
+    .post-detail h1 { font-family: var(--serif); font-size: clamp(20px, 3vw, 28px); font-weight: 400; line-height: 1.6; margin-bottom: 16px; }
+    .post-detail-content { font-size: 15px; line-height: 2; color: var(--text); font-weight: 300; }
+    .post-detail-content h2 { font-family: var(--serif); font-size: 20px; font-weight: 400; margin: 32px 0 12px; padding-left: 14px; border-left: 3px solid var(--gold); color: var(--navy); }
+    .post-detail-content h3 { font-size: 17px; font-weight: 500; margin: 24px 0 10px; color: var(--navy-light); }
     .post-detail-content p { margin-bottom: 16px; }
     .post-detail-content ul { padding-left: 20px; margin-bottom: 16px; }
     .post-detail-content ul li { margin-bottom: 6px; }
-    .post-detail-content .highlight { background: #fff5f5; border-left: 4px solid var(--red); padding: 16px 20px; border-radius: 0 6px 6px 0; margin: 20px 0; }
+    .post-detail-content .highlight { background: #f5f3ee; border-left: 3px solid var(--gold); padding: 16px 20px; border-radius: 0 4px 4px 0; margin: 20px 0; }
     .post-detail-content .highlight p { margin: 0; }
 
     /* フローティングCTA */
-    .floating-cta { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(20,20,20,0.94); backdrop-filter: blur(8px); padding: 10px 14px; display: flex; gap: 10px; justify-content: center; z-index: 300; border-top: 2px solid var(--red); }
-    .floating-cta a { flex: 1; max-width: 230px; background: linear-gradient(to bottom, var(--red), #c0201c); color: var(--white); text-align: center; padding: 11px 8px; border-radius: 4px; font-size: 13px; font-weight: 700; text-decoration: none; box-shadow: 0 3px 0 var(--red-dark); }
-    .floating-cta a small { display: block; font-size: 10px; font-weight: 400; opacity: .85; margin-top: 2px; }
-    .floating-cta a.outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.4); box-shadow: none; }
+    .floating-cta { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(26,39,68,0.97); backdrop-filter: blur(8px); padding: 10px 14px; display: flex; gap: 10px; justify-content: center; z-index: 300; border-top: 1px solid rgba(184,151,90,0.4); }
+    .floating-cta a { flex: 1; max-width: 230px; background: var(--gold); color: var(--navy); text-align: center; padding: 11px 8px; border-radius: 2px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: .06em; transition: background .2s; }
+    .floating-cta a:hover { background: var(--gold-light); }
+    .floating-cta a small { display: block; font-size: 10px; font-weight: 300; opacity: .8; margin-top: 2px; }
+    .floating-cta a.outline { background: transparent; color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.3); }
+    .floating-cta a.outline:hover { background: rgba(255,255,255,0.08); }
 
-    footer { background: #111; padding: 28px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-    .footer-logo { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.6); }
+    footer { background: var(--navy); padding: 28px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1px solid rgba(184,151,90,0.3); }
+    .footer-logo { font-family: var(--serif); font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.7); }
     .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
-    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.35); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
     .footer-copy { font-size: 11px; color: rgba(255,255,255,0.25); width: 100%; text-align: center; margin-top: 8px; }
 
     @media (max-width: 780px) {
+      header { padding: 0 16px; height: 56px; }
+      .logo-main { font-size: 13px; }
       .header-nav { display: none; }
-      .blog-wrap { grid-template-columns: 1fr; }
+      .btn-header { font-size: 12px; padding: 7px 14px; }
+      .page-hero { padding: 36px 18px; }
+      .page-hero h1 { font-size: 22px; }
+      .blog-wrap { grid-template-columns: 1fr; padding: 32px 18px; }
       .sidebar { position: static; }
+      .post-card-img { height: 160px; }
+      .post-card-body { padding: 16px; }
+      .post-card-body h2 { font-size: 15px; }
+      .floating-cta { flex-direction: column; gap: 8px; padding: 12px 16px; }
+      .floating-cta a { font-size: 12px; padding: 10px 16px; }
     }
   </style>
 </head>
@@ -135,7 +154,7 @@
 
 <!-- ページヘッダー -->
 <div class="page-hero">
-  <h1>FPブログ</h1>
+  <h1>毎日のつぶやき</h1>
   <p>老後・相続・保険・資産運用に関する情報を毎日更新しています</p>
 </div>
 
@@ -159,8 +178,8 @@
     <div class="sidebar-block">
       <h3>著者プロフィール</h3>
       <div class="profile-mini">
-        <div class="profile-mini-img" style="background:var(--red);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;border-radius:50%;">鈴</div>
-        <div class="profile-mini-name">鈴木 唱晃</div>
+        <img class="profile-mini-img" src="data:image/jpeg;base64,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" alt="鈴木 唱晃" />
+        <div class="profile-mini-name">おすずき＠第二の人生模索中</div>
         <div class="profile-mini-title">鈴木未来設計FP事務所 代表</div>
         <div class="profile-mini-tags">
           <span class="profile-mini-tag">AFP</span>
@@ -208,6 +227,328 @@
 // id は連番で増やしてください
 // ============================================================
 const posts = [
+  {
+    id: 26,
+    date: "2026年4月28日",
+    cat: "ライフプラン・家計管理",
+    title: "GW前に確認！「緊急予備費」があなたの家計を守る理由",
+    excerpt: "GW前に家計チェック！旅行・外食で出費が増える連休こそ、緊急予備費（生活費3〜6ヶ月分）の確認を。いざというときの備えが、安心な暮らしの土台です。",
+    img: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=800&q=80",
+    content: `
+      <p>GW前に家計チェック！旅行・外食で出費が増える連休こそ、緊急予備費（生活費3〜6ヶ月分）の確認を。</p>
+      <p>いざというときの備えが、安心な暮らしの土台です。不安な方はFPへ気軽にご相談を🎌</p>
+      <div class="highlight"><p>💡 <strong>ポイント</strong>：緊急予備費は「生活費の3〜6ヶ月分」が目安。まずは現状を確認してみましょう。</p></div>
+    `
+  },
+  {
+    id: 25,
+    date: "2026年4月28日",
+    cat: "ライフプラン・相続",
+    title: "リースバックの落とし穴——「売っても住める」の裏に潜む３つのリスク",
+    excerpt: "リースバックでは、自宅の所有権が不動産会社に移ります。売却価格は市場価格より低く、退去を求められたり家賃を値上げされるリスクも。デメリットを知っておきましょう。",
+    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+    content: `
+      <p>リースバックでは、自宅の所有権が不動産会社に移ります。</p>
+      <h2>３つのリスク</h2>
+      <ul>
+        <li>相続が発生しても、マイホームを家族に引き継ぐことはできない</li>
+        <li>売却価格は市場価格より低くなりがち</li>
+        <li>退去を求められたり、家賃を値上げされるリスクがある</li>
+      </ul>
+      <div class="highlight"><p>💡 「売っても住める」という言葉の裏にあるリスクをしっかり理解してから判断しましょう。</p></div>
+    `
+  },
+  {
+    id: 24,
+    date: "2026年4月27日",
+    cat: "ライフプラン・FP",
+    title: "リバースモーゲージの罠——「長生きリスク」で住む家を失う前に知っておきたいこと",
+    excerpt: "リバースモーゲージは不動産会社や銀行が有利になる仕組みです。想定以上に長生きした場合、最悪の場合住む家を失い借金だけが残る状況に陥る可能性があります。",
+    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+    content: `
+      <p>リバースモーゲージは、不動産会社や銀行が有利になる仕組みです。</p>
+      <p>想定以上に長生きした場合、銀行から「これ以上貸すことはできません」と言われ、最悪の場合、住む家を失い借金だけが残る状況に陥る可能性があります。</p>
+      <div class="highlight"><p>💡 特に、自宅を持っている高齢者に営業されることが多いため注意しましょう。判断の前にFPへご相談ください。</p></div>
+    `
+  },
+  {
+    id: 23,
+    date: "2026年4月26日",
+    cat: "ライフプラン・FP",
+    title: "リフォームは「売るつもりがない今」こそ必要——住宅ローン破綻から家の価値を守る",
+    excerpt: "「リフォームは売却対策」と聞いてもピンとこない方は多いはず。しかし住宅ローンが返せず家を手放すケースは珍しくありません。家の価値を守るために今こそリフォームの知識を。",
+    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+    content: `
+      <p>「リフォームは売却対策」と聞いてもピンとこない方は多いはず。</p>
+      <p>しかし住宅ローンが返せず家を手放すケースは珍しくありません。家は人生最大の資産。その価値を守るために、リフォームの知識は「売るつもりがない今」こそ必要です。</p>
+      <div class="highlight"><p>💡 <strong>ポイント</strong>：資産価値を守る視点でリフォームを考えましょう。FP相談でライフプランに組み込んだ検討が可能です。</p></div>
+    `
+  },
+  {
+    id: 22,
+    date: "2026年4月25日",
+    cat: "資産運用・ライフプラン",
+    title: "生活水準の罠を知って資産を育てよう——インデックス積立と自己投資で豊かな未来を",
+    excerpt: "生活水準が上がると、収入に合わせて支出も増え続けてしまいがちです。資産形成には、生活水準を安易に上げずにインデックス積立を始めることが大切。",
+    img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+    content: `
+      <p>生活水準が上がると、収入に合わせて支出も増え続けてしまいがちです😅</p>
+      <h2>資産形成の鉄則</h2>
+      <ul>
+        <li>生活水準を安易に上げずにインデックス積立を始める・増額する</li>
+        <li>収入アップを目的とした自己投資も効果的💪</li>
+        <li>予算の範囲内で今を楽しむことも忘れずに😄</li>
+      </ul>
+      <div class="highlight"><p>💡 <strong>まとめ</strong>：収入が増えたら、まず積立額を増やしてから生活水準を上げることを習慣にしましょう。</p></div>
+    `
+  },
+  {
+    id: 21,
+    date: "2026年4月24日",
+    cat: "エンディングノート・ライフプラン",
+    title: "葬儀費用の相場を知っておくことが家族を守る——エンディングノートから始める終活の備え",
+    excerpt: "葬儀費用は、相場を知らないと費用が膨らみがちです。冷静に判断しにくい場面だからこそ、事前に相場を知っておくことが大切。まずはエンディングノート作成から。",
+    img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80",
+    content: `
+      <p>葬儀費用は、相場を知らないと費用が膨らみがちです。冷静に判断しにくい場面だからこそ、事前に相場を知っておくことが大切😊</p>
+      <p>相場を把握しておけば、提示された金額が妥当かどうかを冷静に判断できます。</p>
+      <div class="highlight"><p>💡 まずはエンディングノート作成から始めましょう✨ 終活の一歩目として最適です。</p></div>
+    `
+  },
+  {
+    id: 20,
+    date: "2026年4月23日",
+    cat: "相続・節税",
+    title: "相続税対策のアパート建築、本当に得？節税額以上を失うリスクを知っておこう",
+    excerpt: "大手ハウスメーカーの相続税対策アパートは建築費が割高。節税できても、空室リスク・修繕費・管理コストで節税額以上のお金と時間を失う可能性があります。",
+    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+    content: `
+      <p>大手ハウスメーカーの相続税対策アパートは建築費が割高。</p>
+      <p>節税できても、空室リスク・修繕費・管理コストで節税額以上のお金と時間を失う可能性があります。</p>
+      <div class="highlight"><p>💡 不動産投資の知識・経験が浅い方は安易なアパート建築を選ばないようにしましょう。相続対策はFPに相談を。</p></div>
+    `
+  },
+  {
+    id: 19,
+    date: "2026年4月22日",
+    cat: "保険・相続",
+    title: "相続税対策の保険は本当に必要？——保険の「本来の役割」から考える",
+    excerpt: "民間保険は「起きる確率は低いが、起きたら人生が破綻するほど大きな損失」に備えるもの。相続税は特例や控除で意外と小さいケースも多く、対策保険が不要な場合もあります。",
+    img: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&q=80",
+    content: `
+      <p>民間保険は「起きる確率は低いが、起きたら人生が破綻するほど大きな損失」に備えるものです。</p>
+      <p>相続税は特例や控除で思ったほど金額が大きくならないケースも多く、人生破綻レベルでなければ「相続税対策の保険は不要」と考えましょう。</p>
+      <div class="highlight"><p>💡 保険加入の前に、まず実際の相続税額を試算しましょう。相続診断士に相談すれば正確な概算が分かります。</p></div>
+    `
+  },
+  {
+    id: 18,
+    date: "2026年4月21日",
+    cat: "相続・ライフプラン",
+    title: "認知症で口座凍結、家族でも引き出せない！まずは「ひとつにまとめる」備えから",
+    excerpt: "認知症で口座が凍結されると、家族でも自由にお金を引き出せなくなります。備えとして「年金が入る口座」と「生活費を払う口座」を同じにまとめておくと安心です。",
+    img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+    content: `
+      <p>認知症で口座が凍結されると、家族でも自由にお金を引き出せなくなります😅</p>
+      <h2>今すぐできる備え</h2>
+      <ul>
+        <li>「年金が入る口座」と「生活費を払う口座」を同じにまとめておく</li>
+        <li>家族信託や任意後見制度の検討も有効</li>
+      </ul>
+      <p>高齢の親やパートナーの口座凍結リスクに今から備えておきましょう‼️</p>
+      <div class="highlight"><p>💡 口座の整理は早めに。FP相談で認知症対策を含むライフプランをご提案します。</p></div>
+    `
+  },
+  {
+    id: 17,
+    date: "2026年4月20日",
+    cat: "相続・エンディングノート",
+    title: "相続対策は「争族」予防のために——エンディングノートから始める家族会議のすすめ",
+    excerpt: "相続対策は、相続税の有無に関係なく、ほぼ全ての家庭で必要です。その目的は「家族全員が納得して財産を引き継ぐこと」。生前の話し合いが足りないと争いになることも。",
+    img: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+    content: `
+      <p>相続対策は、相続税の有無に関係なく、ほぼ全ての家庭で必要です。</p>
+      <p>その目的は「家族全員が納得して財産を引き継ぐこと」。生前の話し合いが足りないと、少額の相続でも争いになることがあります。</p>
+      <div class="highlight"><p>💡 元気なうちから準備を始めましょう！まずはエンディングノート作成から。家族会議のきっかけにもなります。</p></div>
+    `
+  },
+  {
+    id: 16,
+    date: "2026年4月19日",
+    cat: "ライフプラン・FP",
+    title: "「自分の死亡記事を書こう」——スペンディングマネーとタイムバケットで今を生きる",
+    excerpt: "「自分の死亡記事を書こう」健康寿命を考えたとき、残り人生の短さを実感。体力が続く時間から逆算して、スペンディングマネーを意識しながら、やりたいことリストを楽しむことに集中。",
+    img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80",
+    content: `
+      <p>「自分の死亡記事を書こう」――健康寿命を考えたとき、残り人生の短さを実感😅</p>
+      <p>体力が続く時間から逆算して、スペンディングマネーを意識しながら、やりたいことリストを楽しむことに集中💪</p>
+      <p>タイムバケットを見直して、「今」を大切に生きる練習を始めました😊</p>
+      <div class="highlight"><p>💡 人生の残り時間を意識することで、お金の使い方・時間の使い方が変わります。まずはタイムバケットを作ってみましょう。</p></div>
+    `
+  },
+  {
+    id: 15,
+    date: "2026年4月18日",
+    cat: "ライフプラン・資産運用",
+    title: "インフレって何？生活スタイルで感じ方が違うインフレの知識と資産を守る行動",
+    excerpt: "インフレとは、物の値段が上がり、お金の価値が下がること。同じインフレ率でも生活スタイルによって感じ方は大きく変わります。インフレを知り、資産を守る行動につなげよう。",
+    img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+    content: `
+      <p>インフレとは、物の値段が上がり、お金の価値が下がること。世界の先進国のインフレ率は2%ほどですが、同じインフレ率でも生活スタイルによって感じ方は大きく変わります。</p>
+      <h2>インフレへの対策</h2>
+      <ul>
+        <li>現金・預金だけでは実質価値が目減りする</li>
+        <li>株式・不動産などインフレに強い資産を組み合わせる</li>
+        <li>NISAやiDeCoを活用したインデックス投資が有効</li>
+      </ul>
+      <div class="highlight"><p>💡 インフレについて知り、資産を守る行動につなげましょう😄</p></div>
+    `
+  },
+  {
+    id: 14,
+    date: "2026年4月17日",
+    cat: "FP・資産運用",
+    title: "1000万円超の預金は証券口座へ！分別管理と日本投資者保護基金で守る資産管理",
+    excerpt: "証券口座は富を築く１つのツール。1000万円超の預金は、銀行口座を複数持つよりも証券口座への保管も選択肢の一つ。分別管理の仕組みを知り、シンプルな資産管理を。",
+    img: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+    content: `
+      <p>証券口座は富を築く１つのツール💡</p>
+      <p>1000万円超の預金は、銀行口座を複数持つよりも証券口座への保管もいいのでは？</p>
+      <h2>証券口座の安全性</h2>
+      <ul>
+        <li>証券口座の資金は「分別管理」で証券会社が破綻しても保護される</li>
+        <li>万が一の場合でも日本投資者保護基金から1000万円まで補償</li>
+      </ul>
+      <div class="highlight"><p>💡 預金保護の仕組みを知り、シンプルな資産管理を‼️</p></div>
+    `
+  },
+  {
+    id: 13,
+    date: "2026年4月16日",
+    cat: "ライフプラン・資産運用",
+    title: "幸福度が上がるお金の使い方",
+    excerpt: "成長につながる経験にお金を使うと、幸福度が上がりやすくなります。一方で、価格や人付き合いを理由にした買い物をしても、あまり幸福度は上がりません。",
+    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
+    content: `
+      <p>成長につながる経験にお金を使うと、幸福度が上がりやすくなる😊</p>
+      <p>一方で、価格や人付き合いを理由にした買い物をしても、あまり幸福度は上がらない😅</p>
+      <div class="highlight"><p>💡 自分の幸福度が上がるお金の使い方を知っておく。タイムバケットに入れて、ライフプランに登録して人生後悔の無いように‼️</p></div>
+    `
+  },
+  {
+    id: 12,
+    date: "2026年4月15日",
+    cat: "ライフプラン・FP",
+    title: "健康資産がお金を生む！健康とお金の知られざる関係性",
+    excerpt: "橘玲さんの３つの資本（金融資産・人的資本・社会資本）より健康資産が一番大事！健康を維持・強化すると仕事の生産性が上がり、結果的に収入アップにもつながる。",
+    img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
+    content: `
+      <p>橘玲さんの３つの資本（金融資産・人的資本・社会資本）より健康資産が一番大事‼️</p>
+      <h2>健康資産がお金に変わるしくみ</h2>
+      <ul>
+        <li>健康を維持・強化すると体調が整い、仕事の生産性が上がりやすくなる</li>
+        <li>結果的に収入アップにもつながる</li>
+        <li>医療費の削減にもなる</li>
+      </ul>
+      <div class="highlight"><p>💡 健康資産とお金の関係性を知っておこう‼️ 健康への投資はもっとも確実なリターンをもたらします。</p></div>
+    `
+  },
+  {
+    id: 11,
+    date: "2026年4月14日",
+    cat: "ライフプラン・資産運用",
+    title: "時短家電が生み出す「時間」をどう使うか",
+    excerpt: "時短家電の価値は、生まれた時間をどう使うかで変わります。副業に使えば「収入アップにつながる自己投資」になり、家族との時間に使えば「豊かな浪費」になる。",
+    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
+    content: `
+      <p>時短家電の価値は、生まれた時間をどう使うかで変わります。</p>
+      <ul>
+        <li>副業に使えば「収入アップにつながる自己投資」になる</li>
+        <li>家族との時間に使えば「豊かな浪費」になる</li>
+      </ul>
+      <p>時間を買ったあと、その時間をどう使うかについても考えてみてください。</p>
+      <div class="highlight"><p>💡 時短家電は「時間」への投資。その時間で何をするかがあなたの人生の質を決めます。</p></div>
+    `
+  },
+  {
+    id: 10,
+    date: "2026年4月13日",
+    cat: "ライフプラン",
+    title: "タイムバケットはお金を考えずに書き出そう",
+    excerpt: "物事には「それをするのに向いている時期」があります。タイムバケットを作ると、どの時期にどんな行動をすればやりたいことが実現しやすいかが見えます。",
+    img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80",
+    content: `
+      <p>物事には「それをするのに向いている時期」があります。</p>
+      <p>タイムバケットを作ると、どの時期にどんな行動をすればやりたいことが実現しやすいかが見えます。</p>
+      <h2>タイムバケットの作り方のコツ</h2>
+      <ul>
+        <li>まずお金を考えずに書き出すのがコツ</li>
+        <li>お金の工面は実行プランを考えるときにライフプランシートへ追加する</li>
+      </ul>
+      <div class="highlight"><p>💡 やりたいことを時期別に整理するだけで、人生設計がぐっと具体的になります。</p></div>
+    `
+  },
+  {
+    id: 9,
+    date: "2026年4月12日",
+    cat: "ライフプラン・資産運用",
+    title: "お金のベストな使いどき",
+    excerpt: "お金は、若いうちほど価値を引き出しやすいもの。年齢を重ねると体力や興味が落ちて、同じ支出でも満足度が下がりがち。「お金のベストな使いどき」を意識しましょう。",
+    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
+    content: `
+      <p>お金は、若いうちほど価値を引き出しやすいもの。年齢を重ねると体力や興味が落ちて、同じ支出でも満足度が下がりがち。</p>
+      <p>人生を豊かにするために、「お金のベストな使いどき」を意識してみましょう。</p>
+      <div class="highlight"><p>💡 タイムバケットと組み合わせて、いつ・何に・いくら使うかを計画しましょう。</p></div>
+    `
+  },
+  {
+    id: 8,
+    date: "2026年4月12日",
+    cat: "ライフプラン・節税",
+    title: "新年度こそ見直したい！固定費の節約術",
+    excerpt: "新年度が始まりました。生活が変わるタイミングは、家計を見直す絶好のチャンス。固定費（保険・通信費・サブスク）を確認するだけで、年間数万円の節約になることも。",
+    img: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=800&q=80",
+    content: `
+      <p>新年度が始まりました。進学・就職・引越し…生活が変わるタイミングは、家計を見直す絶好のチャンス。</p>
+      <h2>見直すべき固定費</h2>
+      <ul>
+        <li>保険：加入内容が現状に合っているか確認</li>
+        <li>通信費：格安SIMへの切り替えで年数万円節約も</li>
+        <li>サブスク：使っていないサービスを解約</li>
+      </ul>
+      <div class="highlight"><p>💡 固定費の見直しはFP相談でも対応しています。一緒に家計を整理しましょう。</p></div>
+    `
+  },
+  {
+    id: 7,
+    date: "2026年4月11日",
+    cat: "ライフプラン・資産運用",
+    title: "使う力——「いい贅沢」と「悪い贅沢」",
+    excerpt: "「いい贅沢」とは、自分の価値観に合った使い方で心が豊かになる支出のこと。衝動買いや借金での買い物は「悪い贅沢」。大切なお金は自分の心が豊かになることに使おう。",
+    img: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
+    content: `
+      <p>「いい贅沢」とは、自分の価値観に合った使い方で心が豊かになる支出のこと。</p>
+      <p>予算内でずっとほしかった物を買う満足感は長続き😄</p>
+      <p>衝動買いや借金での買い物は「悪い贅沢」😩</p>
+      <div class="highlight"><p>💡 大切なお金は自分の心が豊かになることに使おう‼️ 自分の価値観を明確にすることが、賢いお金の使い方につながります。</p></div>
+    `
+  },
+  {
+    id: 6,
+    date: "2026年4月10日",
+    cat: "ライフプラン",
+    title: "一石二鳥！エンディングノートが持つ2つの役割",
+    excerpt: "「エンディングノート＝死の準備」というイメージを持っている方は多いと思います。しかし実際は全く違います。自分のための棚卸しツールであり、家族への最後の贈り物でもあります。",
+    img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80",
+    content: `
+      <p>「エンディングノート＝死の準備」というイメージを持っている方は多いと思います。しかし実際は全く違います。</p>
+      <h2>役割①：自分自身のための棚卸しツール</h2>
+      <p>これまでの人生を振り返り、「自分は何を大切にしてきたか」「これからどんな人生を歩みたいか」を整理するための前向きなノートです。</p>
+      <h2>役割②：家族への最後の贈り物</h2>
+      <p>万一の際に、預金口座・保険・連絡してほしい人など、残された家族が困らないための情報をまとめておく場所でもあります。</p>
+      <div class="highlight"><p>💡 まずは一冊選んで、名前と生年月日を書くことから始めてみませんか？それだけで十分です。</p></div>
+    `
+  },
   {
     id: 5,
     date: "2025年4月20日",
